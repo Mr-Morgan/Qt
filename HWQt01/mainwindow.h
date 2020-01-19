@@ -33,5 +33,5 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-};
+};//class MainWindow : public QMainWindow
 #endif // MAINWINDOW_H
