@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>php.png</file>
+        <file>python.png</file>
+        <file>c-sharp.png</file>
+        <file>java.png</file>
+        <file>c++.png</file>
+        <file>default.png</file>
+        <file>c.png</file>
+        <file>javascript.png</file>
+    </qresource>
+</RCC>
