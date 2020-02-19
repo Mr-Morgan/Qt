@@ -32,7 +32,10 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionDayNight_triggered();
+
 private:
     Ui::MainWindow *ui;
+    bool NightMode = false;
 };//class MainWindow
 #endif // MAINWINDOW_H

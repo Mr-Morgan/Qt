@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->toolBar->addAction(ui->actionUndo);
     ui->toolBar->addAction(ui->actionRedo);
     ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionDayNight);
+    ui->toolBar->addAction(ui->actionSettings);
     ui->toolBar->addAction(ui->actionAbout);
     ui->toolBar->addSeparator();
     ui->toolBar->addAction(ui->actionExit);
@@ -23,7 +25,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionFullScreen_triggered()
 {
-    (this->isFullScreen())?this->showNormal():this->showFullScreen();
+    if (isFullScreen()) {
+        showNormal();
+        ui->actionFullScreen->setIcon(QIcon(":/icons/icons/fullScreen.png"));
+    } else {
+        showFullScreen();
+        ui->actionFullScreen->setIcon(QIcon(":/icons/icons/fullScreenOff.png"));
+    }//if (isFullScreen())
+//    (this->isFullScreen())?this->showNormal():this->showFullScreen();
 }//on_actionFullScreen_triggered()
 
 void MainWindow::on_actionUndo_triggered()
@@ -93,3 +102,23 @@ void MainWindow::on_actionExit_triggered()
 {
     close();
 }//on_actionExit_triggered()
+
+void MainWindow::on_actionDayNight_triggered()
+{
+    if (NightMode) {
+        ui->actionDayNight->setIcon(QIcon(":/icons/icons/classic.png"));
+        qApp->setStyleSheet("");
+        ui->label->setText("<FONT COLOR=#000000>Author:</FONT>");
+        NightMode = false;
+    } else {
+        QFile file(":/night.css");
+        if (file.open(QIODevice::ReadOnly)) {
+            ui->actionDayNight->setIcon(QIcon(":/icons/icons/night.png"));
+            QString style = file.readAll();
+            qApp->setStyleSheet(style);
+            ui->label->setText("<FONT COLOR=#A6B4B5>Author:</FONT>");
+            file.close();
+            NightMode = true;
+        }//if (file.open(QIODevice::ReadOnly))
+    }//if (NightMode)
+}//on_actionDayNight_triggered()
