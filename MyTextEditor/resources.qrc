@@ -13,6 +13,8 @@
         <file>icons/night.png</file>
         <file>icons/settings.png</file>
         <file>icons/fullScreenOff.png</file>
+        <file>icons/print.png</file>
+        <file>icons/newWindow.png</file>
     </qresource>
     <qresource prefix="/">
         <file>about.txt</file>
