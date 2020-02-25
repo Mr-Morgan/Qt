@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMdiSubWindow>
 #include <QPrintDialog>
 #include <QFileDialog>
 #include <QMainWindow>
@@ -9,8 +10,8 @@
 #include <QPrinter>
 #include <QFile>
 
-#include <QMdiSubWindow>
 
+#include "mytabledialog.h"
 #include "mysubwindow.h"
 #include "mytextedit.h"
 
@@ -39,6 +40,8 @@ private slots:
     void on_actionDayNight_triggered();
     void on_actionPrint_triggered();
     void on_actionNewWindow_triggered();
+    void on_actionaddTable_triggered();
+
 
 private:
     Ui::MainWindow *ui;

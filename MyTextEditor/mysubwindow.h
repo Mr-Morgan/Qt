@@ -22,6 +22,7 @@ public:
     void scanText(QTextStream &s, bool binary = false);
     void setLabelText(QString text);
     void print(QPrinter *p);
+    void insertTable(int32_t n, int32_t m);
 
 signals:
 

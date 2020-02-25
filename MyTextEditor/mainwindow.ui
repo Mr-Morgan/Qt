@@ -259,6 +259,18 @@
     <string>Новое окно</string>
    </property>
   </action>
+  <action name="actionaddTable">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/table.png</normaloff>:/icons/icons/table.png</iconset>
+   </property>
+   <property name="text">
+    <string>addTable</string>
+   </property>
+   <property name="toolTip">
+    <string>Вставить таблицу</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="resources.qrc"/>

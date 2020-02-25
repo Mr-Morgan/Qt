@@ -15,6 +15,7 @@
         <file>icons/fullScreenOff.png</file>
         <file>icons/print.png</file>
         <file>icons/newWindow.png</file>
+        <file>icons/table.png</file>
     </qresource>
     <qresource prefix="/">
         <file>about.txt</file>

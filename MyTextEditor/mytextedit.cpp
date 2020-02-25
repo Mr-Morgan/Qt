@@ -22,6 +22,19 @@ void MyTextEdit::pushChanges(QStack<Changes> &st, Changes ch)
     st.push(ch);
 }//void pushChanges(QStack<Changes> &st, Changes &ch)
 
+void MyTextEdit::pasteTable(int32_t n, int32_t m)
+{
+    QString table = "<table><tbody style=\"border: 1px solid grey;\">";
+    for (int i = 0; i < n; ++i) {
+        table += "<tr>";
+        for (int j = 0; j < m; ++j)
+            table += i? "<td>  </td>":"<th>  </th>";
+        table += "</tr>";
+    }//for (int i = 0; i < n; ++i)
+    table += "</tbody></table>";
+    setHtml(table);
+}//void pasteTable(int32_t n, int32_t m)
+
 void MyTextEdit::contextMenuEvent(QContextMenuEvent *e)
 {
     m->exec(my_action, e->globalPos());

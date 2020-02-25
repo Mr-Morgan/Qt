@@ -70,3 +70,13 @@ void MySubWindow::print(QPrinter *p)
 {
     textEdit->print(p);
 }//void print(QPrinter *p)
+
+void MySubWindow::insertTable(int32_t n, int32_t m)
+{
+    QTextTableFormat f;
+    f.setAlignment(Qt::AlignCenter);
+    f.setCellPadding(10);
+    f.setCellSpacing(0);
+    f.setBorderBrush(QBrush(QColor("#828989")));
+    textEdit->textCursor().insertTable(n, m, f);
+}//void insertTable(int32_t m, int32_t n)

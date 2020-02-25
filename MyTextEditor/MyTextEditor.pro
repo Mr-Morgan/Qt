@@ -19,11 +19,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mysubwindow.cpp \
+    mytabledialog.cpp \
     mytextedit.cpp
 
 HEADERS += \
     mainwindow.h \
     mysubwindow.h \
+    mytabledialog.h \
     mytextedit.h
 
 FORMS += \

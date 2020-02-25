@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->toolBar->addAction(ui->actionUndo);
     ui->toolBar->addAction(ui->actionRedo);
     ui->toolBar->addSeparator();
+    ui->toolBar->addAction(ui->actionaddTable);
     ui->toolBar->addAction(ui->actionDayNight);
     ui->toolBar->addAction(ui->actionSettings);
     ui->toolBar->addAction(ui->actionFullScreen);
@@ -157,3 +158,13 @@ void MainWindow::on_actionNewWindow_triggered()
     ui->mdiArea->addSubWindow(subwindow);
     subwindow->show();
 }//on_actionNewWindow_triggered()
+
+void MainWindow::on_actionaddTable_triggered()
+{
+    MyTableDialog *dialog = new MyTableDialog (this);
+    if (dialog->exec() == QDialog::Accepted) {
+        DataNM data = dialog->getData();
+        ACTIVESUBWIN->insertTable(data.n, data.m);
+    }//if (dialog->exec() == QDialog::Accepted)
+    delete dialog;
+}//on_actionaddTable_triggered()
