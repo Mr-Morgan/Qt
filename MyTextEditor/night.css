@@ -1,12 +1,15 @@
 QObject:hover        {background: #374463;}
 QObject:pressed      {background: #374463;}
 
+QMdiSubWindow        {background: #374063;}
 QWidget:hover        {background: #374063;}
 
 QMainWindow          {background: #374063; color: #E4E8E8;}
 QMainWindow:hover    {background: #374063;}
 
-QToolBar             {background: #374463;}
+QMdiArea:hover       {background: #374063; color: #E4E8E8;}
+
+QToolBar             {background: #374063;}
 
 QScrollBar:vertical             {background: #374063;}
 QScrollBar::handle:vertical     {background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #45517C, stop: 1 #45557C);}

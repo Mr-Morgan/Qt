@@ -1,12 +1,18 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMdiSubWindow>
+#include <QPrintDialog>
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QPrinter>
 #include <QFile>
 
+
+#include "mytabledialog.h"
+#include "mysubwindow.h"
 #include "mytextedit.h"
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +26,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setLabelsText(QString text);
 
 private slots:
     void on_actionFullScreen_triggered();
@@ -29,10 +36,12 @@ private slots:
     void on_open_triggered();
     void on_save_triggered();
     void on_open_read_only_triggered();
-
     void on_actionExit_triggered();
-
     void on_actionDayNight_triggered();
+    void on_actionPrint_triggered();
+    void on_actionNewWindow_triggered();
+    void on_actionaddTable_triggered();
+
 
 private:
     Ui::MainWindow *ui;

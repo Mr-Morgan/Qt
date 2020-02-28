@@ -22,33 +22,18 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="MyTextEdit" name="textEdit">
-      <property name="undoRedoEnabled">
-       <bool>false</bool>
+    <item row="0" column="1">
+     <widget class="QMdiArea" name="mdiArea">
+      <property name="background">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>156</red>
+         <green>156</green>
+         <blue>156</blue>
+        </color>
+       </brush>
       </property>
      </widget>
-    </item>
-    <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Author:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="textFormat">
-         <enum>Qt::RichText</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="text">
-         <string>Author Name</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </item>
    </layout>
   </widget>
@@ -87,6 +72,7 @@
     </widget>
     <addaction name="menu"/>
     <addaction name="save"/>
+    <addaction name="actionPrint"/>
    </widget>
    <widget class="QMenu" name="settings">
     <property name="title">
@@ -124,6 +110,9 @@
    </property>
    <property name="text">
     <string>Сохранить</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionFullScreen">
@@ -246,14 +235,43 @@
     <string>Настройки</string>
    </property>
   </action>
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/print.png</normaloff>:/icons/icons/print.png</iconset>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionNewWindow">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/newWindow.png</normaloff>:/icons/icons/newWindow.png</iconset>
+   </property>
+   <property name="text">
+    <string>NewWindow</string>
+   </property>
+   <property name="toolTip">
+    <string>Новое окно</string>
+   </property>
+  </action>
+  <action name="actionaddTable">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/table.png</normaloff>:/icons/icons/table.png</iconset>
+   </property>
+   <property name="text">
+    <string>addTable</string>
+   </property>
+   <property name="toolTip">
+    <string>Вставить таблицу</string>
+   </property>
+  </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MyTextEdit</class>
-   <extends>QTextEdit</extends>
-   <header>mytextedit.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>
