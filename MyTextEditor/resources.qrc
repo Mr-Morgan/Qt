@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/TextEditor.png</file>
+        <file>icons/fullScreen.png</file>
+        <file>icons/redo.png</file>
+        <file>icons/undo.png</file>
+        <file>icons/about.png</file>
+        <file>icons/open.png</file>
+        <file>icons/saveas.png</file>
+        <file>icons/classic.png</file>
+        <file>icons/exit.png</file>
+        <file>icons/menu.png</file>
+        <file>icons/night.png</file>
+        <file>icons/settings.png</file>
+        <file>icons/fullScreenOff.png</file>
+        <file>icons/print.png</file>
+        <file>icons/newWindow.png</file>
+        <file>icons/table.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>about.txt</file>
+        <file>night.css</file>
+    </qresource>
+</RCC>
