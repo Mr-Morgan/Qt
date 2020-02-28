@@ -1,27 +1,19 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QStack>
-#include <QString>
-#include <QFile>
+#include <QMdiSubWindow>
+#include <QPrintDialog>
 #include <QFileDialog>
+#include <QMainWindow>
 #include <QMessageBox>
 #include <QTextStream>
-#include <QKeyEvent>
+#include <QPrinter>
+#include <QFile>
 
-#define STACK_MAX_SIZE 50
 
-enum BDKey {Backspace = 1, Delete};
-
-struct Changes
-{
-    int32_t pos; //position
-    QString data;
-    bool del;    //is delete?
-    Changes() {}
-    Changes(int32_t p, QString d, bool de = false) : pos(p), data(d), del(de) {}
-};//struct Changes
+#include "mytabledialog.h"
+#include "mysubwindow.h"
+#include "mytextedit.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,27 +25,26 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    void pushChanges(QStack<Changes> &st, Changes ch);
     ~MainWindow();
-
-protected:
-    virtual void keyReleaseEvent(QKeyEvent *event);
+    void setLabelsText(QString text);
 
 private slots:
     void on_actionFullScreen_triggered();
-    void on_textEdit_textChanged();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
     void on_actionAbout_triggered();
     void on_open_triggered();
     void on_save_triggered();
+    void on_open_read_only_triggered();
+    void on_actionExit_triggered();
+    void on_actionDayNight_triggered();
+    void on_actionPrint_triggered();
+    void on_actionNewWindow_triggered();
+    void on_actionaddTable_triggered();
+
 
 private:
     Ui::MainWindow *ui;
-    QString twc;    //text without changes
-    QStack<Changes> undo;
-    QStack<Changes> redo;
-    bool undoRedoFlag = false;
-    BDKey key;
+    bool NightMode = false;
 };//class MainWindow
 #endif // MAINWINDOW_H
