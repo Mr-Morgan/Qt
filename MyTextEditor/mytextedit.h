@@ -29,6 +29,7 @@ class MyTextEdit : public QTextEdit
 public:
     explicit MyTextEdit(QWidget *parent = nullptr);
     void pushChanges(QStack<Changes> &st, Changes ch);
+    void pasteTable(int32_t n, int32_t m);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
