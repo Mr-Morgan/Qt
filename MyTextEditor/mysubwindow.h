@@ -23,6 +23,13 @@ public:
     void setLabelText(QString text);
     void print(QPrinter *p);
     void insertTable(int32_t n, int32_t m);
+    void setCursor(const QCursor &c);
+    void setFormatNeedsInserted(bool needs);
+    void saveTextFormat();
+    void setTextFormat(QTextCharFormat f);
+    QTextCharFormat getTextFormat();
+    void setAlign(Qt::Alignment a);
+    bool getFNI();
 
 signals:
 

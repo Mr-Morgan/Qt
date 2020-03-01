@@ -78,6 +78,8 @@
     <property name="title">
      <string>Настройки</string>
     </property>
+    <addaction name="actionDayNight"/>
+    <addaction name="actionFont"/>
    </widget>
    <addaction name="file"/>
    <addaction name="settings"/>
@@ -99,6 +101,24 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNewWindow"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="separator"/>
+   <addaction name="actionCopyFormat"/>
+   <addaction name="actionAlignment"/>
+   <addaction name="actionAlLeft"/>
+   <addaction name="actionAlCentr"/>
+   <addaction name="actionAlRight"/>
+   <addaction name="actionAlWidth"/>
+   <addaction name="actionaddTable"/>
+   <addaction name="actionSettings"/>
+   <addaction name="actionFont"/>
+   <addaction name="actionDayNight"/>
+   <addaction name="actionFullScreen"/>
+   <addaction name="actionAbout"/>
+   <addaction name="separator"/>
+   <addaction name="actionExit"/>
   </widget>
   <action name="save">
    <property name="checkable">
@@ -224,6 +244,9 @@
    </property>
   </action>
   <action name="actionSettings">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources.qrc">
      <normaloff>:/icons/icons/settings.png</normaloff>:/icons/icons/settings.png</iconset>
@@ -269,6 +292,96 @@
    </property>
    <property name="toolTip">
     <string>Вставить таблицу</string>
+   </property>
+  </action>
+  <action name="actionFont">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/font.png</normaloff>:/icons/font.png</iconset>
+   </property>
+   <property name="text">
+    <string>Font</string>
+   </property>
+   <property name="toolTip">
+    <string>Шрифт</string>
+   </property>
+  </action>
+  <action name="actionCopyFormat">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/copy_format.png</normaloff>:/icons/icons/copy_format.png</iconset>
+   </property>
+   <property name="text">
+    <string>CopyFormat</string>
+   </property>
+   <property name="toolTip">
+    <string>Копировать формат текста</string>
+   </property>
+  </action>
+  <action name="actionAlignment">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/alignment_left.png</normaloff>:/icons/alignment_left.png</iconset>
+   </property>
+   <property name="text">
+    <string>Alignment</string>
+   </property>
+   <property name="toolTip">
+    <string>Выравнивание</string>
+   </property>
+  </action>
+  <action name="actionAlRight">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/alignment_right.png</normaloff>:/icons/alignment_right.png</iconset>
+   </property>
+   <property name="text">
+    <string>AlRight</string>
+   </property>
+   <property name="toolTip">
+    <string>По правому краю</string>
+   </property>
+  </action>
+  <action name="actionAlLeft">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/alignment_left.png</normaloff>:/icons/alignment_left.png</iconset>
+   </property>
+   <property name="text">
+    <string>AlLeft</string>
+   </property>
+   <property name="toolTip">
+    <string>По левому краю</string>
+   </property>
+  </action>
+  <action name="actionAlCentr">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/alignment_center.png</normaloff>:/icons/alignment_center.png</iconset>
+   </property>
+   <property name="text">
+    <string>AlCentr</string>
+   </property>
+   <property name="toolTip">
+    <string>По середине</string>
+   </property>
+  </action>
+  <action name="actionAlWidth">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/alignment.png</normaloff>:/icons/alignment.png</iconset>
+   </property>
+   <property name="text">
+    <string>AlWidth</string>
+   </property>
+   <property name="toolTip">
+    <string>По ширине</string>
    </property>
   </action>
  </widget>

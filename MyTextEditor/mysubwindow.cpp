@@ -80,3 +80,39 @@ void MySubWindow::insertTable(int32_t n, int32_t m)
     f.setBorderBrush(QBrush(QColor("#828989")));
     textEdit->textCursor().insertTable(n, m, f);
 }//void insertTable(int32_t m, int32_t n)
+
+void MySubWindow::setCursor(const QCursor &c)
+{
+    textEdit->viewport()->setCursor(c);
+}//void setCursor(const QCursor &c)
+
+void MySubWindow::setFormatNeedsInserted(bool needs)
+{
+    textEdit->setFormatNeedsInserted(needs);
+}//void setFormatNeedsInserted(bool needs)
+
+void MySubWindow::saveTextFormat()
+{
+    textEdit->saveTextFormat();
+}//void saveTextFormat()
+
+void MySubWindow::setTextFormat(QTextCharFormat f)
+{
+    textEdit->setTextFormat(f);
+}//void setTextFormat(QTextCharFormat f)
+
+QTextCharFormat MySubWindow::getTextFormat()
+{
+    return textEdit->getTextFormat();
+}//QTextCharFormat getTextFormat()
+
+
+void MySubWindow::setAlign(Qt::Alignment a)
+{
+    textEdit->setAlignment(a);
+}//void setAlign(Qt::Alignment a)
+
+bool MySubWindow::getFNI()
+{
+    return textEdit->getFNI();
+}//bool getFNI()

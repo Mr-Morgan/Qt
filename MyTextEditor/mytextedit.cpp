@@ -22,18 +22,30 @@ void MyTextEdit::pushChanges(QStack<Changes> &st, Changes ch)
     st.push(ch);
 }//void pushChanges(QStack<Changes> &st, Changes &ch)
 
-void MyTextEdit::pasteTable(int32_t n, int32_t m)
+void MyTextEdit::saveTextFormat()
 {
-    QString table = "<table><tbody style=\"border: 1px solid grey;\">";
-    for (int i = 0; i < n; ++i) {
-        table += "<tr>";
-        for (int j = 0; j < m; ++j)
-            table += i? "<td>  </td>":"<th>  </th>";
-        table += "</tr>";
-    }//for (int i = 0; i < n; ++i)
-    table += "</tbody></table>";
-    setHtml(table);
-}//void pasteTable(int32_t n, int32_t m)
+    f = textCursor().charFormat();
+}//void saveTextFormat()
+
+void MyTextEdit::setFormatNeedsInserted(bool needs)
+{
+    fni = needs;
+}//void setFormatNeedsInserted(bool needs)
+
+void MyTextEdit::setTextFormat(QTextCharFormat f)
+{
+    textCursor().setCharFormat(f);
+}//void setTextFormat(QTextCharFormat f)
+
+QTextCharFormat MyTextEdit::getTextFormat()
+{
+    return textCursor().charFormat();
+}//QTextCharFormat getTextFormat()
+
+bool MyTextEdit::getFNI()
+{
+    return fni;
+}//bool getFNI()
 
 void MyTextEdit::contextMenuEvent(QContextMenuEvent *e)
 {
@@ -47,6 +59,14 @@ void MyTextEdit::keyReleaseEvent(QKeyEvent *e)
     else if (e->key() == Qt::Key_Delete)
         key = BDKey::Delete;
 }//void keyReleaseEvent(QKeyEvent *event)
+
+void MyTextEdit::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::MouseButton::LeftButton && fni) {
+        textCursor().setCharFormat(f);
+        fni = false;
+    }//if (e->button() == Qt::MouseButton::LeftButton && fni)
+}//void mouseReleaseEvent(QMouseEvent *e)
 
 #define CUR_POS textCursor().position()
 #define LIO(ch) text.lastIndexOf(ch, CUR_POS-1)

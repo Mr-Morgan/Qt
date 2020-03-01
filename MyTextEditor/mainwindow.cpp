@@ -9,17 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->toolBar->addAction(ui->actionNewWindow);
-    ui->toolBar->addAction(ui->actionUndo);
-    ui->toolBar->addAction(ui->actionRedo);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionaddTable);
-    ui->toolBar->addAction(ui->actionDayNight);
-    ui->toolBar->addAction(ui->actionSettings);
-    ui->toolBar->addAction(ui->actionFullScreen);
-    ui->toolBar->addAction(ui->actionAbout);
-    ui->toolBar->addSeparator();
-    ui->toolBar->addAction(ui->actionExit);
+    ui->actionDayNight->setVisible(false);
+    ui->actionFont->setVisible(false);
+    ui->actionAlLeft->setVisible(false);
+    ui->actionAlCentr->setVisible(false);
+    ui->actionAlRight->setVisible(false);
+    ui->actionAlWidth->setVisible(false);
 
     on_actionNewWindow_triggered();
 }//MainWindow(QWidget *parent = nullptr)
@@ -168,3 +163,67 @@ void MainWindow::on_actionaddTable_triggered()
     }//if (dialog->exec() == QDialog::Accepted)
     delete dialog;
 }//on_actionaddTable_triggered()
+
+void MainWindow::on_actionSettings_triggered(bool checked)
+{
+    ui->actionDayNight->setVisible(checked);
+    ui->actionFont->setVisible(checked);
+}//on_actionSettings_triggered(bool checked)
+
+void MainWindow::on_actionCopyFormat_triggered(bool checked)
+{
+    if (checked) {
+        ACTIVESUBWIN->setCursor(QCursor(QPixmap(":/icons/icons/fomat_cursor.png")));
+        ACTIVESUBWIN->saveTextFormat();
+        ACTIVESUBWIN->setFormatNeedsInserted(checked);
+    } else ACTIVESUBWIN->setCursor(QCursor(Qt::CursorShape::IBeamCursor));
+}//on_actionCopyFormat_triggered(bool checked)
+
+void MainWindow::on_actionFont_triggered()
+{
+    QFont font = ACTIVESUBWIN->getTextFormat().font();
+    QFontDialog fdlg(font, this);
+    bool b[] = {true};
+    font = fdlg.getFont(b);
+    if (b[0]) {
+        QTextCharFormat f;
+        f.setFont(font);
+        ACTIVESUBWIN->setTextFormat(f);
+    }//if (b[0])
+}//on_actionFont_triggered()
+
+void MainWindow::on_actionAlignment_triggered(bool checked)
+{
+    ui->actionAlLeft->setVisible(checked);
+    ui->actionAlCentr->setVisible(checked);
+    ui->actionAlRight->setVisible(checked);
+    ui->actionAlWidth->setVisible(checked);
+}//on_actionAlignment_triggered(bool checked)
+
+void MainWindow::on_actionAlRight_triggered()
+{
+    ui->actionAlignment->setIcon(QIcon(":/icons/alignment_right.png"));
+    ACTIVESUBWIN->setAlign(Qt::AlignRight);
+    ui->actionAlignment->trigger();
+}//on_actionAlRight_triggered()
+
+void MainWindow::on_actionAlLeft_triggered()
+{
+    ui->actionAlignment->setIcon(QIcon(":/icons/alignment_left.png"));
+    ACTIVESUBWIN->setAlign(Qt::AlignLeft);
+    ui->actionAlignment->trigger();
+}//on_actionAlLeft_triggered()
+
+void MainWindow::on_actionAlCentr_triggered()
+{
+    ui->actionAlignment->setIcon(QIcon(":/icons/alignment_center.png"));
+    ACTIVESUBWIN->setAlign(Qt::AlignCenter);
+    ui->actionAlignment->trigger();
+}//on_actionAlCentr_triggered()
+
+void MainWindow::on_actionAlWidth_triggered()
+{
+    ui->actionAlignment->setIcon(QIcon(":/icons/alignment.png"));
+    ACTIVESUBWIN->setAlign(Qt::AlignJustify);
+    ui->actionAlignment->trigger();
+}//on_actionAlWidth_triggered()

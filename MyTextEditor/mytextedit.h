@@ -10,6 +10,8 @@
 #include <QStack>
 #include <QMenu>
 
+#include <QTextCharFormat>
+
 #define STACK_MAX_SIZE 50
 
 enum BDKey {Backspace = 1, Delete};
@@ -29,11 +31,16 @@ class MyTextEdit : public QTextEdit
 public:
     explicit MyTextEdit(QWidget *parent = nullptr);
     void pushChanges(QStack<Changes> &st, Changes ch);
-    void pasteTable(int32_t n, int32_t m);
+    void saveTextFormat();
+    void setFormatNeedsInserted(bool needs);
+    void setTextFormat(QTextCharFormat f);
+    QTextCharFormat getTextFormat();
+    bool getFNI();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
     void keyReleaseEvent(QKeyEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
 
 public slots:
     void on_textEdit_textChanged();
@@ -48,6 +55,8 @@ private:
     QString twc;    //text without changes
     BDKey key;
     QMenu *m;
+    QTextCharFormat f;
+    bool fni = false;    //The format needs to be inserted?
 };//class MyTextEdit : public QTextEdit
 
 #endif // MYTEXTEDIT_H

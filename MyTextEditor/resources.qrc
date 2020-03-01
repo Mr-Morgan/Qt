@@ -16,9 +16,16 @@
         <file>icons/print.png</file>
         <file>icons/newWindow.png</file>
         <file>icons/table.png</file>
+        <file>icons/copy_format.png</file>
+        <file>icons/fomat_cursor.png</file>
     </qresource>
     <qresource prefix="/">
         <file>about.txt</file>
         <file>night.css</file>
+        <file>icons/alignment.png</file>
+        <file>icons/alignment_center.png</file>
+        <file>icons/alignment_left.png</file>
+        <file>icons/alignment_right.png</file>
+        <file>icons/font.png</file>
     </qresource>
 </RCC>

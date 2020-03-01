@@ -10,6 +10,7 @@
 #include <QPrinter>
 #include <QFile>
 
+#include<QFontDialog>
 
 #include "mytabledialog.h"
 #include "mysubwindow.h"
@@ -41,7 +42,17 @@ private slots:
     void on_actionPrint_triggered();
     void on_actionNewWindow_triggered();
     void on_actionaddTable_triggered();
+    void on_actionSettings_triggered(bool checked);
+    void on_actionCopyFormat_triggered(bool checked);
 
+    void on_actionFont_triggered();
+
+    void on_actionAlignment_triggered(bool checked);
+
+    void on_actionAlRight_triggered();
+    void on_actionAlLeft_triggered();
+    void on_actionAlCentr_triggered();
+    void on_actionAlWidth_triggered();
 
 private:
     Ui::MainWindow *ui;
