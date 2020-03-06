@@ -74,15 +74,7 @@
     <addaction name="save"/>
     <addaction name="actionPrint"/>
    </widget>
-   <widget class="QMenu" name="settings">
-    <property name="title">
-     <string>Настройки</string>
-    </property>
-    <addaction name="actionDayNight"/>
-    <addaction name="actionFont"/>
-   </widget>
    <addaction name="file"/>
-   <addaction name="settings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -111,6 +103,8 @@
    <addaction name="actionAlCentr"/>
    <addaction name="actionAlRight"/>
    <addaction name="actionAlWidth"/>
+   <addaction name="actionPaste"/>
+   <addaction name="actionDateTime"/>
    <addaction name="actionaddTable"/>
    <addaction name="actionSettings"/>
    <addaction name="actionFont"/>
@@ -285,10 +279,10 @@
   <action name="actionaddTable">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/icons/icons/table.png</normaloff>:/icons/icons/table.png</iconset>
+     <normaloff>:/icons/icons/pasteTable.png</normaloff>:/icons/icons/pasteTable.png</iconset>
    </property>
    <property name="text">
-    <string>addTable</string>
+    <string>Таблица</string>
    </property>
    <property name="toolTip">
     <string>Вставить таблицу</string>
@@ -382,6 +376,30 @@
    </property>
    <property name="toolTip">
     <string>По ширине</string>
+   </property>
+  </action>
+  <action name="actionDateTime">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/dateTime.png</normaloff>:/icons/icons/dateTime.png</iconset>
+   </property>
+   <property name="text">
+    <string>Дата/Время</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/icons/paste.png</normaloff>:/icons/icons/paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Вставить</string>
    </property>
   </action>
  </widget>

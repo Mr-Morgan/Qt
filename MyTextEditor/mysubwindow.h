@@ -3,6 +3,7 @@
 
 #include <QGridLayout>
 #include <QTextStream>
+#include <QDateTime>
 #include <QLineEdit>
 #include <QPrinter>
 #include <QWidget>
@@ -30,8 +31,13 @@ public:
     QTextCharFormat getTextFormat();
     void setAlign(Qt::Alignment a);
     bool getFNI();
+    void insertDateTime(QDateTime &d);
+
+public slots:
+    void on_charFormatChanged(bool b);
 
 signals:
+    void charFormatChanged(bool);
 
 private:
     MyTextEdit *textEdit;

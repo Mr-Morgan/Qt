@@ -20,13 +20,15 @@ SOURCES += \
     mainwindow.cpp \
     mysubwindow.cpp \
     mytabledialog.cpp \
-    mytextedit.cpp
+    mytextedit.cpp \
+    mytimedatedialog.cpp
 
 HEADERS += \
     mainwindow.h \
     mysubwindow.h \
     mytabledialog.h \
-    mytextedit.h
+    mytextedit.h \
+    mytimedatedialog.h
 
 FORMS += \
     mainwindow.ui

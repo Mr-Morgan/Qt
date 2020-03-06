@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionAlCentr->setVisible(false);
     ui->actionAlRight->setVisible(false);
     ui->actionAlWidth->setVisible(false);
+    ui->actionaddTable->setVisible(false);
+    ui->actionDateTime->setVisible(false);
 
     on_actionNewWindow_triggered();
 }//MainWindow(QWidget *parent = nullptr)
@@ -150,6 +152,8 @@ void MainWindow::on_actionNewWindow_triggered()
     NightMode? subwindow->setLabelText("<FONT COLOR=#A6B4B5>Author:</FONT>"):
                subwindow->setLabelText("<FONT COLOR=#000000>Author:</FONT>");
 
+    connect(subwindow, SIGNAL(charFormatChanged(bool)), this, SLOT(on_actionCopyFormat_triggered(bool)));
+
     ui->mdiArea->addSubWindow(subwindow);
     subwindow->show();
 }//on_actionNewWindow_triggered()
@@ -176,7 +180,10 @@ void MainWindow::on_actionCopyFormat_triggered(bool checked)
         ACTIVESUBWIN->setCursor(QCursor(QPixmap(":/icons/icons/fomat_cursor.png")));
         ACTIVESUBWIN->saveTextFormat();
         ACTIVESUBWIN->setFormatNeedsInserted(checked);
-    } else ACTIVESUBWIN->setCursor(QCursor(Qt::CursorShape::IBeamCursor));
+    } else {
+        ui->actionCopyFormat->setChecked(checked);
+        ACTIVESUBWIN->setCursor(QCursor(Qt::CursorShape::IBeamCursor));
+    }
 }//on_actionCopyFormat_triggered(bool checked)
 
 void MainWindow::on_actionFont_triggered()
@@ -227,3 +234,19 @@ void MainWindow::on_actionAlWidth_triggered()
     ACTIVESUBWIN->setAlign(Qt::AlignJustify);
     ui->actionAlignment->trigger();
 }//on_actionAlWidth_triggered()
+
+void MainWindow::on_actionPaste_triggered(bool checked)
+{
+    ui->actionaddTable->setVisible(checked);
+    ui->actionDateTime->setVisible(checked);
+}//on_actionPaste_triggered(bool checked)
+
+void MainWindow::on_actionDateTime_triggered()
+{
+    MyTimeDateDialog *dialog = new MyTimeDateDialog (this);
+    if (dialog->exec() == QDialog::Accepted) {
+        QDateTime data = dialog->getData();
+        ACTIVESUBWIN->insertDateTime(data);
+    }//if (dialog->exec() == QDialog::Accepted)
+    delete dialog;
+}//on_actionDateTime_triggered()

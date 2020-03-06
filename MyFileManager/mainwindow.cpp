@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     path = new QLineEdit (this);
 
+    qApp->setStyleSheet("QMainWindow {background: #FFFFFF;}");
+
     ui->toolBar->addAction(ui->actionBack);
     ui->toolBar->addAction(ui->actionForward);
     ui->toolBar->addWidget(path);
@@ -27,9 +29,27 @@ MainWindow::MainWindow(QWidget *parent)
     model->setFilter(QDir::AllEntries | QDir::NoDot);
     model->setRootPath("/home");
 
-    ui->favour->setFrameStyle(QFrame::NoFrame);
-    ui->favour->setIconSize(QSize(32, 32));
-    ui->favour->setGridSize(QSize(80, 50));
+    favour = new QStandardItemModel (this);
+    favour->appendRow(new QStandardItem(QIcon(":/icons/home.png"),      tr("Домашняя папка"))); //1
+    favour->appendRow(new QStandardItem(QIcon(":/icons/desktop.png"),   tr("Рабочий стол")));   //2
+    favour->appendRow(new QStandardItem(QIcon(":/icons/video.png"),     tr("Видео")));          //3
+    favour->appendRow(new QStandardItem(QIcon(":/icons/documents.png"), tr("Документы")));      //4
+    favour->appendRow(new QStandardItem(QIcon(":/icons/download.png"),  tr("Загрузки")));       //5
+    favour->appendRow(new QStandardItem(QIcon(":/icons/images.png"),    tr("Изображения")));    //6
+    favour->appendRow(new QStandardItem(QIcon(":/icons/music.png"),     tr("Музыка")));         //7
+    favour->appendRow(new QStandardItem(QIcon(":/icons/basket.png"),    tr("Корзина")));        //8
+
+    ui->favour->setModel(favour);
+    ui->favour->setIconSize(QSize(24, 24));
+    ui->favour->setGridSize(QSize(170, 30));
+    ui->favour->setRootIndex(model->index(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first()));
+
+    ui->device->setIconSize(QSize(24, 24));
+    ui->device->setGridSize(QSize(170, 30));
+    ui->device->hide();
+
+    ui->user_favour->setIconSize(QSize(24, 24));
+    ui->user_favour->setGridSize(QSize(170, 30));
 
     ui->listView->setModel(model);
     ui->listView->setRootIndex(model->index("/home"));
@@ -40,12 +60,41 @@ MainWindow::MainWindow(QWidget *parent)
 
     path->setText(model->rootPath());
     connect(path, SIGNAL(returnPressed()), this, SLOT(on_path_returnPressed()));
+
+    timer = new QTimer(this);
+    timer->start(1000);
+
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_timer()));
 }//MainWindow(QWidget *parent = nullptr)
+
+#define PATH(P) QStandardPaths::standardLocations(P).first()
+#define HOME_PATH QStandardPaths::HomeLocation
+#define DESK_PATH QStandardPaths::DesktopLocation
+#define VIDE_PATH QStandardPaths::MoviesLocation
+#define DOCU_PATH QStandardPaths::DocumentsLocation
+#define DOWN_PATH QStandardPaths::DownloadLocation
+#define IMAG_PATH QStandardPaths::PicturesLocation
+#define MUSI_PATH QStandardPaths::MusicLocation
+#define BASK_PATH QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first()
 
 void MainWindow::pushChanges(QStack<QString> &st, QString ch)
 {
     if (st.count() == STACK_MAX_SIZE) st.pop_front();
     st.push(ch);
+}
+
+inline QStandardPaths::StandardLocation MainWindow::favourDirTransform(int dir)
+{
+    switch (dir) {
+    case HOME:      return HOME_PATH;
+    case DESKTOP:   return DESK_PATH;
+    case VIDEO:     return VIDE_PATH;
+    case DOCUMENTS: return DOCU_PATH;
+    case DOWNLOAD:  return DOWN_PATH;
+    case IMAGES:    return IMAG_PATH;
+    case MUSIC:     return MUSI_PATH;
+    default:        return HOME_PATH;
+    }//switch (dir)
 }//void pushChanges(QStack<QString> &st, QString &ch)
 
 MainWindow::~MainWindow()
@@ -128,5 +177,42 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_favour_clicked(const QModelIndex &index)
 {
-    on_listView_doubleClicked(index);
+    on_listView_doubleClicked(model->index(PATH(favourDirTransform(index.row()))));
 }//on_favour_clicked(const QModelIndex &index)
+
+void MainWindow::on_timer()
+{
+    QList<QStorageInfo> list = QStorageInfo::mountedVolumes();
+    QStandardItemModel *m = new QStandardItemModel (this);
+
+    int16_t count = 0;
+    QStringList device_names;
+    device_names.clear();
+
+    for (auto i : list)
+        if (i.name() != "") {
+            m->appendRow(new QStandardItem(QIcon(":/icons/device.png"), i.name()));
+            device_names << i.name();
+            count++;
+        }//if (i.name() != "")
+
+    if (count && (device_count != count)) {
+        thread = new MyThreadUpdater(device_names, &device_path, this);
+        thread->start();
+        for (; thread->isRunning(); ) { }
+        ui->device->setModel(m);
+        ui->device->setMaximumSize(170, count*32);
+        ui->device->show();
+        device_count = count;
+    } else if (!count) ui->device->hide();
+}//void on_timer()
+
+void MainWindow::on_user_favour_clicked(const QModelIndex &index)
+{
+
+}//on_user_favour_clicked(const QModelIndex &index)
+
+void MainWindow::on_device_clicked(const QModelIndex &index)
+{
+    on_listView_doubleClicked(model->index(device_path.at(index.row())));
+}//on_device_clicked(const QModelIndex &index)

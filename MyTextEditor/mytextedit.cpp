@@ -65,6 +65,7 @@ void MyTextEdit::mouseReleaseEvent(QMouseEvent *e)
     if (e->button() == Qt::MouseButton::LeftButton && fni) {
         textCursor().setCharFormat(f);
         fni = false;
+        emit charFormatChanged(false);
     }//if (e->button() == Qt::MouseButton::LeftButton && fni)
 }//void mouseReleaseEvent(QMouseEvent *e)
 

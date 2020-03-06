@@ -32,5 +32,6 @@
         <file>icons/night.png</file>
         <file>icons/settings.png</file>
         <file>about.txt</file>
+        <file>icons/device.png</file>
     </qresource>
 </RCC>

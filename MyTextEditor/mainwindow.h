@@ -4,14 +4,14 @@
 #include <QMdiSubWindow>
 #include <QPrintDialog>
 #include <QFileDialog>
+#include <QFontDialog>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QTextStream>
 #include <QPrinter>
 #include <QFile>
 
-#include<QFontDialog>
-
+#include "mytimedatedialog.h"
 #include "mytabledialog.h"
 #include "mysubwindow.h"
 #include "mytextedit.h"
@@ -44,15 +44,16 @@ private slots:
     void on_actionaddTable_triggered();
     void on_actionSettings_triggered(bool checked);
     void on_actionCopyFormat_triggered(bool checked);
-
     void on_actionFont_triggered();
-
     void on_actionAlignment_triggered(bool checked);
-
     void on_actionAlRight_triggered();
     void on_actionAlLeft_triggered();
     void on_actionAlCentr_triggered();
     void on_actionAlWidth_triggered();
+
+    void on_actionPaste_triggered(bool checked);
+
+    void on_actionDateTime_triggered();
 
 private:
     Ui::MainWindow *ui;

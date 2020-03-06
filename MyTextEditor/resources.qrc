@@ -18,6 +18,9 @@
         <file>icons/table.png</file>
         <file>icons/copy_format.png</file>
         <file>icons/fomat_cursor.png</file>
+        <file>icons/dateTime.png</file>
+        <file>icons/paste.png</file>
+        <file>icons/pasteTable.png</file>
     </qresource>
     <qresource prefix="/">
         <file>about.txt</file>

@@ -47,6 +47,9 @@ public slots:
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
 
+signals:
+    void charFormatChanged(bool);
+
 private:
     bool undoRedoFlag = false;
     QList<QAction*> my_action;

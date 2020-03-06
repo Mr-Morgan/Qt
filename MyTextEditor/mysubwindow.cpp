@@ -27,6 +27,8 @@ MySubWindow::MySubWindow(QWidget *parent) : QWidget(parent)
     horizontalLayout->addWidget(lineEdit);
 
     gridLayout->addLayout(horizontalLayout, 1, 0, 1, 1);
+
+    connect(textEdit, SIGNAL(charFormatChanged(bool)), this, SLOT(on_charFormatChanged(bool)));
 }//MySubWindow(QWidget *parent, MyTextEdit *te, QLineEdit *le, QLabel *l)
 
 MySubWindow::~MySubWindow()
@@ -116,3 +118,14 @@ bool MySubWindow::getFNI()
 {
     return textEdit->getFNI();
 }//bool getFNI()
+
+void MySubWindow::insertDateTime(QDateTime &d)
+{
+    if (d.time() == QTime(0,0)) textEdit->insertPlainText(d.date().toString("ddd MMM dd yyyy"));
+    else textEdit->insertPlainText(d.date().toString("ddd MMM dd yyyy") + " " + d.time().toString());
+}//void insertDateTime(QDateTime d)
+
+void MySubWindow::on_charFormatChanged(bool b)
+{
+    emit charFormatChanged(b);
+}//void on_charFormatChanged(bool b)
