@@ -19,7 +19,7 @@ void MyThreadUpdater::run()
         QFileInfoList drivers = QDir::drives();
         for (auto name : dev_names)
             for (auto i : drivers)
-                if (name == i.path()) *paths << i.path();
+                *paths << i.path();
         stop();
     }else dirlist << QDir("/").path();
     for (; !stoped;) {
