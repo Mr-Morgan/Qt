@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/add.png</file>
+        <file>icons/add_pressed.png</file>
+    </qresource>
+</RCC>
