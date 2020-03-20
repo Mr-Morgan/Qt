@@ -3,7 +3,6 @@
         <file>main.qml</file>
         <file>Table.qml</file>
         <file>TableLine.qml</file>
-        <file>ModelLine.qml</file>
         <file>AddButton.qml</file>
         <file>CalendarDialog.qml</file>
         <file>AddTaskDialog.qml</file>

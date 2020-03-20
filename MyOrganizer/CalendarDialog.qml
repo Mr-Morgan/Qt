@@ -9,6 +9,7 @@ Dialog {
     width: 350
     height: 400
     property string date: ""
+    property bool isStart: true
 
     standardButtons: StandardButton.Cancel | StandardButton.Ok
 

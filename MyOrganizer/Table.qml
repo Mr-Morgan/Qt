@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import Table 1.0
 
 ListView {
     id: rootView
@@ -6,19 +7,18 @@ ListView {
     height: parent.height
     anchors.fill: parent
 
-    model: ModelLine {
+    model: MyTableModel {
 
-    }//ModelLine
+    }//MyTableModel
 
     delegate: TableLine {
-          _id: index
-          _id_text: if (_id != 0) _id
-          back_color: if (_id != 0) "#FFFFFF"
+          _id_text: if (index != 0) index
+          back_color: if (index != 0) "#FFFFFF"
           task_name: name
           task_description: description
           start_date: start
           end_date: end
-          progress: prog
-          line_height: if (_id != 0) _height
+          prog: progress
+          line_height: if (index != 0) line_height + line_height
     }//TableLine
 }//rootView

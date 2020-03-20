@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include "mytablemodel.h"
 
 /*
 1.  Создать внешний вид программы-органайзера, которая будет отображать задачи.
@@ -30,12 +31,15 @@
 4.  (По желанию) Ввод даты начала и окончания выполнения задачи осуществить через виджет календаря.
 */
 
+#include <algorithm>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<MyTableModel>("Table", 1, 0, "MyTableModel");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -45,6 +49,8 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+//    itoa()
 
     return app.exec();
 }//int main(int argc, char *argv[])

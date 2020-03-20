@@ -3,8 +3,9 @@ import QtQuick.Controls 2.12
 
 Rectangle {
     id: _addButton
-    width: 73
-    height: 73
+    property int size: 75
+    width: size
+    height: size
     radius: 100
 
     signal clicked;
@@ -21,7 +22,7 @@ Rectangle {
         id: _imgBut
         source: "qrc:/icons/add.png"
         anchors.fill: parent
-        fillMode: Image.Tile
+        fillMode: Image.PreserveAspectFit
     }//_imgBut
 }//_addButton
 

@@ -11,10 +11,10 @@ Dialog {
     property string task_description: "Описание задания"
     property string start_date: "Дата начала"
     property string end_date: "Дата окончания"
-    property string progress: "Прогресс"
+    property string progress: "0%"
     property string back_color: "#FFFFFF"
 
-    width: 800
+    width: 840
     height: 60
 
     Rectangle {
@@ -37,16 +37,19 @@ Dialog {
         id: _rName
         color: back_color
         height: parent.height
-        width: (parent.width - 390) / 2
+        width: (parent.width - 430) / 2
         anchors.left: _rId.right
         border.color: black
         border.width: 1
 
-        TextEdit {
+        TextField {
             id: _tName
             text: task_name
             font.italic: true
+            width: parent.width
             anchors.centerIn: parent
+            horizontalAlignment: TextInput.AlignHCenter
+            ScrollBar.horizontal: autoScroll
         }//_tName
     }//_rName
 
@@ -54,16 +57,19 @@ Dialog {
         id: _rDesc
         color: back_color
         height: parent.height
-        width: (parent.width - 390) / 2
+        width: (parent.width - 430) / 2
         anchors.left: _rName.right
         border.color: black
         border.width: 1
 
-        TextEdit {
+        TextField {
             id: _tDesc
             text: task_description
             font.italic: true
+            width: parent.width
             anchors.centerIn: parent
+            horizontalAlignment: TextInput.AlignHCenter
+            ScrollBar.horizontal: autoScroll
         }//_tDesc
     }//_rDesc
 
@@ -71,22 +77,27 @@ Dialog {
         id: _rStart
         color: back_color
         height: parent.height
-        width: 120
+        width: 140
         anchors.left: _rDesc.right
         border.color: black
         border.width: 1
 
-        TextEdit {
+        TextField {
             id: _dStart
+            text: start_date
             font.italic: true
+            width: parent.width
             anchors.centerIn: parent
+            horizontalAlignment: TextInput.AlignHCenter
 
             MouseArea {
                 id: _mStart
                 anchors.fill: parent
-                onClicked: { _calDialogStart.open() }
+                onClicked: {
+                    _calDialog.open()
+                    _calDialog.isStart = true
+                }//onClicked
             }//_mStart
-            text: (_calDialogStart.date !== "")? _calDialogStart.date : start_date
         }//_dStart
     }//_rStart
 
@@ -94,22 +105,27 @@ Dialog {
         id: _rEnd
         color: back_color
         height: parent.height
-        width: 120
+        width: 140
         anchors.left: _rStart.right
         border.color: black
         border.width: 1
 
-        TextEdit {
+        TextField {
             id: _dEnd
+            text: end_date
             font.italic: true
+            width: parent.width
             anchors.centerIn: parent
+            horizontalAlignment: TextInput.AlignHCenter
 
             MouseArea {
                 id: _mEnd
                 anchors.fill: parent
-                onClicked: { _calDialogEnd.open() }
+                onClicked: {
+                    _calDialog.open()
+                    _calDialog.isStart = false
+                }//onClicked
             }//_mStart
-            text: (_calDialogEnd.date !== "")? _calDialogEnd.date : end_date
         }//_dEnd
     }//_rEnd
 
@@ -122,11 +138,13 @@ Dialog {
         border.color: black
         border.width: 1
 
-        TextEdit {
+        TextField {
             id: _prog
             font.italic: true
             text: progress
+            width: parent.width
             anchors.centerIn: parent
+            horizontalAlignment: TextInput.AlignHCenter
         }//_prog
     }//_rProg
 
@@ -139,12 +157,11 @@ Dialog {
     }//onAccepted
 
     CalendarDialog {
-        id: _calDialogStart
+        id: _calDialog
         visible: false
-    }//_calDialogEnd
-
-    CalendarDialog {
-        id: _calDialogEnd
-        visible: false
+        onAccepted: {
+            if (isStart) _dStart.text = (_calDialog.date !== "")? _calDialog.date : end_date
+            else _dEnd.text = (_calDialog.date !== "")? _calDialog.date : end_date
+        }//onAccepted
     }//_calDialogEnd
 }//_addDialog
