@@ -6,6 +6,8 @@ import QtQuick.Controls 2.12
 Item {
     id: rootItem
     property int line_height: 25
+    property int _index: index
+    property bool cbVisible: (_index != 0)? rootView.delMode : false
     property string _id_text: "ID"
     property string task_name: "Название задания"
     property string task_description: "Описание задания"
@@ -13,6 +15,8 @@ Item {
     property string end_date: "Дата окончания"
     property string prog: "Прогресс"
     property string back_color: "#7C9BA3"
+
+    signal dataChanged
 
     width: parent.width
     height: line_height
@@ -37,9 +41,10 @@ Item {
 
     Rectangle {
         id: _rName
+        clip: true
         color: back_color
         height: parent.height
-        width: (parent.width - 430) / 2
+        width: (parent.width - 470) / 2
         anchors.left: _rId.right
         border.color: black
         border.width: 1
@@ -48,42 +53,20 @@ Item {
             id: _tName
             text: task_name
             background: back_color
-            width: parent.width
-            anchors.centerIn: parent
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
+            verticalAlignment: TextInput.AlignVCenter
+            y: (_index == 0)? -1 : parent.height/5
+            x: -_hNbar.position * width
+            onTextChanged: {
+                task_name = text
+                rootItem.dataChanged()
+            }//onTextChanged
         }//_tName
-    }//_rName
-
-    Rectangle {
-        id: _rDesc
-        color: back_color
-        height: parent.height
-        width: (parent.width - 430) / 2
-        anchors.left: _rName.right
-        border.color: black
-        border.width: 1
-
-        clip: true
-
-        TextField {
-
-            id: _tDesc
-            text: task_description
-            background: back_color
-            //                width: parent.width
-            anchors.centerIn: parent
-            font.italic: (_prog.text === "100%")
-            font.strikeout: (_prog.text === "100%")
-            horizontalAlignment: TextInput.AlignHCenter
-
-            //                x: -hbar.position * width
-        }//_tDesc
-
 
         ScrollBar {
-            id: hbar
+            id: _hNbar
             hoverEnabled: true
             active: hovered || pressed
             orientation: Qt.Horizontal
@@ -91,8 +74,45 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-        }
+        }//_hbar
+    }//_rName
 
+    Rectangle {
+        id: _rDesc
+        clip: true
+        color: back_color
+        anchors.left: _rName.right
+        height: parent.height
+        width: (parent.width - 470) / 2
+        border.width: 1
+        border.color: black
+
+        TextField {
+            id: _tDesc
+            text: task_description
+            background: back_color
+            font.italic: (_prog.text === "100%")
+            font.strikeout: (_prog.text === "100%")
+            horizontalAlignment: TextInput.AlignHCenter
+            verticalAlignment: TextInput.AlignVCenter
+            y: (_index == 0)? -1 : parent.height/5
+            x: -_hDbar.position * width
+            onTextChanged: {
+                task_description = text
+                rootItem.dataChanged()
+            }//onTextChanged
+        }//_tDesc
+
+        ScrollBar {
+            id: _hDbar
+            hoverEnabled: true
+            active: hovered || pressed
+            orientation: Qt.Horizontal
+            size: _rDesc.width / _tDesc.width
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+        }//_hbar
     }//_rDesc
 
     Rectangle {
@@ -113,6 +133,19 @@ Item {
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
+            onTextChanged: {
+                start_date = text
+                rootItem.dataChanged()
+            }//onTextChanged
+
+            MouseArea {
+                id: _mStart
+                anchors.fill: parent
+                onClicked: {
+                    _calDialog.open()
+                    _calDialog.isStart = true
+                }//onClicked
+            }//_mStart
         }//_dStart
     }//_rStart
 
@@ -134,6 +167,19 @@ Item {
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
+            onTextChanged: {
+                end_date = text
+                rootItem.dataChanged()
+            }//onTextChanged
+
+            MouseArea {
+                id: _mEnd
+                anchors.fill: parent
+                onClicked: {
+                    _calDialog.open()
+                    _calDialog.isStart = false
+                }//onClicked
+            }//_mEnd
         }//_dEnd
     }//_rEnd
 
@@ -141,21 +187,47 @@ Item {
         id: _rProg
         color: back_color
         height: parent.height
-        width: 100
+        width: 140
         anchors.left: _rEnd.right
         border.color: black
         border.width: 1
 
         TextField {
             id: _prog
-            text: progress
+            text: prog
             background: back_color
             width: parent.width
             anchors.centerIn: parent
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
+            onTextChanged: {
+                prog = text
+                rootItem.dataChanged()
+            }//onTextChanged
         }//_prog
+
+        MyCheckBox{
+            id: _cB
+            size: parent.height - 2
+            anchors.right: parent.right
+            anchors.rightMargin: 1
+            anchors.top: parent.top
+            anchors.topMargin: 1
+            visible: cbVisible
+            checked: if (!rootView.delMode) false
+            onClicked: { rootView.model.setIsDel(index) }
+            onVisibleChanged: { if (!visible) checked = false }
+        }//_cB
     }//_rProg
+
+    CalendarDialog {
+        id: _calDialog
+        visible: false
+        onAccepted: {
+            if (isStart) _dStart.text = (_calDialog.date !== "")? _calDialog.date : end_date
+            else _dEnd.text = (_calDialog.date !== "")? _calDialog.date : end_date
+        }//onAccepted
+    }//_calDialog
 
 }//rootItem

@@ -6,5 +6,10 @@
         <file>AddButton.qml</file>
         <file>CalendarDialog.qml</file>
         <file>AddTaskDialog.qml</file>
+        <file>DelButton.qml</file>
+        <file>MyCheckBox.qml</file>
+        <file>BackButton.qml</file>
+        <file>SettingsButton.qml</file>
+        <file>DayNightModeButton.qml</file>
     </qresource>
 </RCC>
