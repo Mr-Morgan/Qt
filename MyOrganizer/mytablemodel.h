@@ -1,11 +1,14 @@
 #ifndef MYTABLEMODEL_H
 #define MYTABLEMODEL_H
 
-#include <QAbstractListModel>
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QSqlQuery>
 #include <QObject>
+#include <QDebug>
 #include <vector>
 
-class MyTableModel : public QAbstractListModel
+class MyTableModel :  public QSqlTableModel
 {
     Q_OBJECT
 public:
@@ -13,7 +16,6 @@ public:
 
     struct MyLine
     {
-//        int32_t taskID;
         QString name;
         QString description;
         QString start;
@@ -26,7 +28,9 @@ public:
     };//struct MyLine
 
     MyTableModel(QObject *parent = nullptr);
-    int rowCount(const QModelIndex &parent) const override;
+    ~MyTableModel();
+    int rowCount(const QModelIndex & = QModelIndex()) const override;
+    int columnCount(const QModelIndex & = QModelIndex()) const override {return 1;}
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
@@ -37,7 +41,7 @@ public:
 
 private:
     std::vector<MyLine> m_data;
-//    int32_t count;
+    QSqlDatabase db;
 
 };//class MyTableModel : public QAbstractListModel
 

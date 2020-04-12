@@ -50,7 +50,5 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
-//    itoa()
-
     return app.exec();
 }//int main(int argc, char *argv[])

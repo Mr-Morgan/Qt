@@ -1,16 +1,44 @@
-#include "mytablemodel.h"
+﻿#include "mytablemodel.h"
 
-MyTableModel::MyTableModel(QObject *parent) : QAbstractListModel(parent)
-{
-    m_data.push_back(MyLine("Название задания","Описание задания","Дата начала","Дата окончания","Прогресс"));
-}//MyTableModel(QObject *parent = nullptr);
-
+#define QREC(n) query.record().value(n).toString()
 #define SCI(n) static_cast<int>(n)
 #define SCIDS SCI(m_data.size())
 
-int MyTableModel::rowCount(const QModelIndex &parent) const
+MyTableModel::MyTableModel(QObject *parent) : QSqlTableModel(parent)
 {
-    return parent.isValid()? 0 : SCIDS;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("tasks");
+    if (!db.open()) qCritical() << "Cannot open database";
+
+    QSqlQuery query(db);
+    setQuery(query);
+
+    this->query().exec("CREATE TABLE tasks (id INTEGER PRIMARY KEY NOT NULL, name VARCHAR(500), description VARCHAR(1000), "
+                       "start VARCHAR(10), end VARCHAR(10), progress VARCHAR(4));");
+    setTable("tasks");
+    select();
+
+    query = this->query();
+    if (!query.exec("SELECT * FROM tasks;")) qCritical() << "Unable to select table";
+
+    m_data.push_back(MyLine("Название задания","Описание задания","Дата начала","Дата окончания","Прогресс"));
+    for (;query.next();) m_data.push_back(MyLine(QREC(1),QREC(2),QREC(3),QREC(4),QREC(5)));
+}//MyTableModel(QObject *parent = nullptr);
+
+MyTableModel::~MyTableModel()
+{
+    if (!this->query().exec("DELETE FROM tasks;")) qCritical() << "Unable to drop table";
+
+    QString str = "INSERT INTO tasks (id, name, description, start, end, progress)"
+                          "VALUES('%1','%2','%3','%4','%5','%6');";
+    for (int i = 1; i < SCIDS; ++i)
+        this->query().exec(str.arg(i).arg(m_data[i].name).arg(m_data[i].description).arg(m_data[i].start).arg(m_data[i].end).arg(m_data[i].progress));
+    db.close();
+}//~MyTableModel();
+
+int MyTableModel::rowCount(const QModelIndex &) const
+{
+    return SCIDS;
 }//int rowCount(const QModelIndex &parent) const override;
 
 #define SCU(n) static_cast<unsigned>(n)
@@ -34,7 +62,7 @@ QVariant MyTableModel::data(const QModelIndex &index, int role) const
 
 QHash<int, QByteArray> MyTableModel::roleNames() const
 {
-    QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
+    QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
     roles[IdRole]     = "taskID";
     roles[NameRole]   = "name";
     roles[DescRole]   = "description";

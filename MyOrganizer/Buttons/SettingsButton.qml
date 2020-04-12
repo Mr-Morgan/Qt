@@ -1,15 +1,21 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
 
 Rectangle {
     id: _setButton
     property int size: 75
+    property bool nigthMode: false
+    property string back_color: (nigthMode)? "#303030" : "#FAFAFA"
+    color: back_color
     width: size
     height: size
     radius: 100
     property bool isPressed: false
 
     signal clicked
+    signal dayNightModeChanged
+    onDayNightModeChanged: { nigthMode = !nigthMode }
 
     MouseArea {
         id: _mArea

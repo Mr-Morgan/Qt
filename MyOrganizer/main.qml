@@ -1,8 +1,13 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.5
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
+import "./Buttons" as Buttons;
+import "./Dialogs" as Dialogs;
+import "./Model" as Model;
 
-Window {
+ApplicationWindow {
     id: root
     visible: true
     minimumWidth: 840
@@ -11,7 +16,11 @@ Window {
     height: 480
     title: qsTr("My Organaizer")
 
-    Table {
+    property bool nigthMode: false
+    Material.theme: (nigthMode)? Material.Dark : Material.Light
+    Material.accent: Material.DeepPurple
+
+    Model.Table {
         id: _table
         y: -_vbar.position * height
     }//_table
@@ -19,6 +28,7 @@ Window {
     ScrollBar {
         id: _vbar
         hoverEnabled: true
+        width: 7
         active: hovered || pressed
         orientation: Qt.Vertical
         size: root.height / _table.height
@@ -43,7 +53,7 @@ Window {
         }//onClicked
     }//_mArea
 
-    AddButton {
+    Buttons.AddButton {
         id: _addB
         size: 73
         anchors.right: parent.right
@@ -53,7 +63,7 @@ Window {
         onClicked: { _aTD.open() }
     }//_addB
 
-    DelButton {
+    Buttons.DelButton {
         id: _delB
         visible: false
         size: 68
@@ -72,7 +82,7 @@ Window {
         }//onClicked
     }//_delB
 
-    BackButton {
+    Buttons.BackButton {
         id: _backB
         visible: false
         size: 73
@@ -90,7 +100,7 @@ Window {
         }//onClicked
     }//_backB
 
-    SettingsButton {
+    Buttons.SettingsButton {
         id: _setB
         visible: true
         size: 73
@@ -103,7 +113,7 @@ Window {
         }//onClicked
     }//_setB
 
-    DayNightModeButton {
+    Buttons.DayNightModeButton {
         id: _dnmB
         visible: false
         size: 73
@@ -112,11 +122,17 @@ Window {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
         onClicked: {
-
+            root.nigthMode = !root.nigthMode
+            _setB.dayNightModeChanged()
+            _backB.dayNightModeChanged()
+            _delB.dayNightModeChanged()
+            _addB.dayNightModeChanged()
+            _table.dayNightModeChanged()
+            _aTD.dayNightModeChanged()
         }//onClicked
     }//_dnmB
 
-    AddTaskDialog {
+    Dialogs.AddTaskDialog {
         id: _aTD
         visible: false
         _id: _table.model.rowCount()
@@ -125,5 +141,4 @@ Window {
             _id = _table.model.rowCount()
         }//onAccepted
     }//_aTD
-
 }//root

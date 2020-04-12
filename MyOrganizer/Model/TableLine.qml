@@ -2,10 +2,14 @@ import QtQuick 2.0
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
+import "../Buttons" as Buttons;
+import "../Dialogs" as Dialogs;
 
 Item {
     id: rootItem
     property int line_height: 25
+
     property int _index: index
     property bool cbVisible: (_index != 0)? rootView.delMode : false
     property string _id_text: "ID"
@@ -14,9 +18,13 @@ Item {
     property string start_date: "Дата начала"
     property string end_date: "Дата окончания"
     property string prog: "Прогресс"
-    property string back_color: "#7C9BA3"
+    property bool nigthMode: false
+    property string back_color: Material.color(Material.Grey, (nigthMode)?Material.Shade800:Material.Shade200)
+    property string border_color: Material.color(Material.Grey, Material.Shade700)
 
     signal dataChanged
+    signal dayNightModeChanged
+    onDayNightModeChanged: { nigthMode = !nigthMode }
 
     width: parent.width
     height: line_height
@@ -27,7 +35,7 @@ Item {
         height: parent.height
         width: 50
         anchors.left: parent.left
-        border.color: black
+        border.color: border_color
         border.width: 1
 
         Label {
@@ -46,18 +54,20 @@ Item {
         height: parent.height
         width: (parent.width - 470) / 2
         anchors.left: _rId.right
-        border.color: black
+        border.color: border_color
         border.width: 1
 
         TextField {
             id: _tName
             text: task_name
-            background: back_color
+            readOnly: (_index == 0)? true : false
+            selectByMouse: true
+            background: Item {}
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
             verticalAlignment: TextInput.AlignVCenter
-            y: (_index == 0)? -1 : parent.height/5
+            y: (_index == 0)? -4 : parent.height/5
             x: -_hNbar.position * width
             onTextChanged: {
                 task_name = text
@@ -67,6 +77,7 @@ Item {
 
         ScrollBar {
             id: _hNbar
+            height: 7
             hoverEnabled: true
             active: hovered || pressed
             orientation: Qt.Horizontal
@@ -85,17 +96,19 @@ Item {
         height: parent.height
         width: (parent.width - 470) / 2
         border.width: 1
-        border.color: black
+        border.color: border_color
 
         TextField {
             id: _tDesc
             text: task_description
-            background: back_color
+            readOnly: (_index == 0)? true : false
+            selectByMouse: true
+            background: Item {}
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
             verticalAlignment: TextInput.AlignVCenter
-            y: (_index == 0)? -1 : parent.height/5
+            y: (_index == 0)? -4 : parent.height/5
             x: -_hDbar.position * width
             onTextChanged: {
                 task_description = text
@@ -105,6 +118,7 @@ Item {
 
         ScrollBar {
             id: _hDbar
+            height: 7
             hoverEnabled: true
             active: hovered || pressed
             orientation: Qt.Horizontal
@@ -121,18 +135,19 @@ Item {
         height: parent.height
         width: 140
         anchors.left: _rDesc.right
-        border.color: black
+        border.color: border_color
         border.width: 1
 
         TextField {
             id: _dStart
             text: start_date
-            background: back_color
-            width: parent.width
-            anchors.centerIn: parent
+            readOnly: (_index == 0)? true : false
+            selectByMouse: true
+            background: Item {}
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
+            y: (_index == 0)? -4 : parent.height/5
             onTextChanged: {
                 start_date = text
                 rootItem.dataChanged()
@@ -141,6 +156,7 @@ Item {
             MouseArea {
                 id: _mStart
                 anchors.fill: parent
+                enabled: (_index == 0)? false : true
                 onClicked: {
                     _calDialog.open()
                     _calDialog.isStart = true
@@ -155,18 +171,19 @@ Item {
         height: parent.height
         width: 140
         anchors.left: _rStart.right
-        border.color: black
+        border.color: border_color
         border.width: 1
 
         TextField {
             id: _dEnd
             text: end_date
-            background: back_color
-            width: parent.width
-            anchors.centerIn: parent
+            readOnly: (_index == 0)? true : false
+            selectByMouse: true
+            background: Item {}
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
+            y: (_index == 0)? -4 : parent.height/5
             onTextChanged: {
                 end_date = text
                 rootItem.dataChanged()
@@ -175,6 +192,7 @@ Item {
             MouseArea {
                 id: _mEnd
                 anchors.fill: parent
+                enabled: (_index == 0)? false : true
                 onClicked: {
                     _calDialog.open()
                     _calDialog.isStart = false
@@ -189,26 +207,28 @@ Item {
         height: parent.height
         width: 140
         anchors.left: _rEnd.right
-        border.color: black
+        border.color: border_color
         border.width: 1
 
         TextField {
             id: _prog
             text: prog
-            background: back_color
-            width: parent.width
-            anchors.centerIn: parent
+            readOnly: (_index == 0)? true : false
+            selectByMouse: true
+            background: Item {}
             font.italic: (_prog.text === "100%")
             font.strikeout: (_prog.text === "100%")
             horizontalAlignment: TextInput.AlignHCenter
+            y: (_index == 0)? -4 : parent.height/5
             onTextChanged: {
                 prog = text
                 rootItem.dataChanged()
             }//onTextChanged
         }//_prog
 
-        MyCheckBox{
+        Buttons.MyCheckBox{
             id: _cB
+            back_color: rootItem.back_color
             size: parent.height - 2
             anchors.right: parent.right
             anchors.rightMargin: 1
@@ -221,9 +241,10 @@ Item {
         }//_cB
     }//_rProg
 
-    CalendarDialog {
+    Dialogs.CalendarDialog {
         id: _calDialog
         visible: false
+        nigthMode: rootItem.nigthMode
         onAccepted: {
             if (isStart) _dStart.text = (_calDialog.date !== "")? _calDialog.date : end_date
             else _dEnd.text = (_calDialog.date !== "")? _calDialog.date : end_date

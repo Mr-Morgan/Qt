@@ -1,14 +1,19 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
 
 Rectangle {
     id: _checkBox
     property int size: 30
     property bool checked: false
+    property string back_color: Material.color(Material.Grey, Material.Shade200)
+    color: back_color
     width: size
     height: size
 
     signal clicked
+    signal dayNightModeChanged
+    onDayNightModeChanged: { nigthMode = !nigthMode }
 
     MouseArea {
         id: _mArea

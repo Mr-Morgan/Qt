@@ -16,5 +16,6 @@
         <file>icons/night_pressed.png</file>
         <file>icons/settings.png</file>
         <file>icons/settings_pressed.png</file>
+        <file>qtquickcontrols2.conf</file>
     </qresource>
 </RCC>
